@@ -23,6 +23,7 @@ The fleet management blueprint consists of Eclipse Leda, Eclipse Kanto, Eclipse 
 ## Hack-Coaches
 
 - Sven Jeroschewski
+- Lukas Mittag
 
 ## Template Setup
 
