@@ -14,11 +14,13 @@ manage apps, data, and services for a diverse set of vehicles.
 The use case illustrates how the standard [Vehicle Signal Specification model (VSS)](https://covesa.github.io/vehicle_signal_specification/) can be customized and used to report data from a vehicle
 to a back end.
 
-Within the hackathon, we are looking forward to your ideas for potential features and technologies to integrate into the blueprint, like, but not limited, to range-prediction or better data sampling and campaign management.
+Within the hackathon, we are looking forward to your ideas for potential features and technologies to integrate into the blueprint, like, but not limited, to fleet range-prediction or better data sampling and campaign management.
 
 ## Need to know
 
 The fleet management blueprint consists of [Eclipse Leda](https://eclipse-leda.github.io/leda/), [Eclipse Kanto](https://github.com/eclipse-kanto), [Eclipse Kuksa](https://eclipse-kuksa.github.io/kuksa-website/), [Eclipse Hono](https://github.com/eclipse-hono/hono), InfluxDB, Grafana, and Docker Compose. A basic understanding of these technologies and the Vehicle Signal Specification (VSS) is helpful to get started right away but is not required. Therefore, we look forward to discussing and seeing how the technologies that you are knowledgeable of can be good extensions of the blueprint.
+
+![fleet management architecture](./fleet-management-architecture.png)
 
 ## Hack-Coaches
 
