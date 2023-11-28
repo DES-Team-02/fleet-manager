@@ -134,7 +134,7 @@ services:
     networks:
     - "fms-vehicle"
     ports:
-    - "127.0.0.1:55555:55556"
+    - "127.0.0.1:55553:55556"
     configs:
     - "vss_overlay.json"
     environment:
