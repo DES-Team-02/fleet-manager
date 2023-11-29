@@ -57,6 +57,7 @@ async fn main() {
         .route("/", get(root))
         .route("/rfms/vehicleposition", get(get_vehicleposition))
         .route("/rfms/vehicles", get(get_vehicles))
+        .route("/rfms/insurancereport", get(get_vehicleinsurancereport))
         .with_state(influx_reader);
     axum::Server::bind(&"0.0.0.0:8081".parse().unwrap())
         .serve(app.into_make_service())
@@ -65,11 +66,11 @@ async fn main() {
 }
 
 async fn root() -> &'static str {
-    "Welcome to the rFMS server. The following endpoints are implemented: '/rfms/vehicleposition and /rfms/vehicles'"
+    "Hello World!"
 }
 
 async fn get_vehicleposition(
-    State(influx_server): State<Arc<InfluxReader>>,
+State(influx_server): State<Arc<InfluxReader>>,
     Query(params): Query<HashMap<String, String>>,
 ) -> Result<Json<serde_json::Value>, StatusCode> {
     let start_time = params.get("starttime").map_or(0, |text| {
@@ -134,3 +135,34 @@ async fn get_vehicles(
             StatusCode::INTERNAL_SERVER_ERROR
         })
 }
+
+async fn get_vehicleinsurancereport() -> &'static str {
+   "Test"
+}
+
+// async fn get_vehicleinsurancereport(
+//     State(influx_server): State<Arc<InfluxReader>>,
+//     Query(_params): Query<HashMap<String, String>>,
+// ) -> Result<Json<serde_json::Value>, StatusCode> {
+//     let vin:Option<&String> = _params.get("vin");
+//     influx_server
+//         .get_vehicleinsurancereport()
+//         .await
+//         .map(|insurancereport| {
+//             let result = models::VehicleInsuranceReportResponseObjectVehicleInsuranceReportResponse {
+//                 vehicle_insurance_report: Some(insurancereport),
+//             };
+//             let result_object = json!(models::VehicleInsurcanceReportResponseObject {
+//                 vehicle_insurance_report_response: result,
+//                 more_data_available: false,
+//                 more_data_available_link: None,
+//                 request_server_date_time: chrono::Utc::now()
+//             }
+//             );
+//             Json(result_object)
+//         })
+//         .map_err(|e| {
+//             error!("error retrieving vehicle insurance report: {e}");
+//             StatusCode::INTERNAL_SERVER_ERROR
+//         })
+// }
