@@ -143,6 +143,9 @@ fn build_snapshot_measurement(
         if let Some(value) = snapshot_data.emissions_co2 {
           builder = builder.field(crate::FIELD_EMISSIONS_CO2, value);
         }
+        if let Some(value) = snapshot_data.driver1_time_related_status {
+          builder = builder.field(crate::FIELD_DRIVER1_TIMERELATED_STATUS, value);
+        }
         // end of new parameters
 
         if let Some(current_location) = snapshot_data.gnss_position.into_option() {

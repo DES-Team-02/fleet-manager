@@ -280,6 +280,13 @@ pub fn new_vehicle_status(data: HashMap<String, Value>, default_vin: &String) ->
       .mut_or_insert_default()
       .emissions_co2 = value.clone().try_into().unwrap();
     }
+
+    if let Some(value) = data.get(vss::FMS_VEHICLE_DRIVER1_TIMERELATED_STATUS) {
+      vehicle_status
+      .snapshot_data
+      .mut_or_insert_default()
+      .driver1_time_related_status = value.clone().try_into().unwrap();
+    }
     // -- end of new parameter
 
     if let Some(value) = data.get(vss::VSS_VEHICLE_CHASSIS_PARKINGBRAKE_ISENGAGED) {

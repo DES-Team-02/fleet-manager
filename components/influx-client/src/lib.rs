@@ -55,12 +55,13 @@ pub const FIELD_WHEEL_BASED_SPEED: &str = "wheelBasedSpeed";
 // Added Parameter
 pub const FIELD_SERVICE_DISTANCE: &str = "serviceDistance";
 pub const FIELD_ACCELERATOR_PEDALPOSITION: &str = "acceleratorPedalposition";
-pub const FIELD_BRAKE_CIRCUIT1_PEDALPOSITION: &str = "brakeCirtuit1Pedalposition";
+pub const FIELD_BRAKE_CIRCUIT1_PEDALPOSITION: &str = "brakeCircuit1Pedalposition";
 pub const FIELD_TRIP_DURATION: &str = "tripDuration";
 pub const FIELD_AVERAGE_SPEED: &str = "averageSpeed";
 pub const FIELD_TRAVELED_DISTANCE_SINCESTART: &str = "traveledDistanceSinceStart";
 pub const FIELD_WHEEL_LEFT_BRAKE_PADWEAR: &str = "wheelLeftBrakePadWear";
 pub const FIELD_EMISSIONS_CO2: &str = "emissionsCO2PerTravel";
+pub const FIELD_DRIVER1_TIMERELATED_STATUS: &str = "driver1TimeRelatedStatus";
 
 
 pub const MEASUREMENT_HEADER: &str = "header";
