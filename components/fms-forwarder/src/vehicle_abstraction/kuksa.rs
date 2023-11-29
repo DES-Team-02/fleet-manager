@@ -247,6 +247,39 @@ pub fn new_vehicle_status(data: HashMap<String, Value>, default_vin: &String) ->
             .mut_or_insert_default()
             .brake_circuit1_pedalposition = value.clone().try_into().unwrap();
     }
+
+    if let Some(value) = data.get(vss::VSS_VEHICLE_TRIP_DURATION) {
+        vehicle_status
+            .snapshot_data
+            .mut_or_insert_default()
+            .trip_duration = value.clone().try_into().unwrap();
+    }
+
+    if let Some(value) = data.get(vss::VSS_VEHICLE_AVERAGE_SPEED) {
+        vehicle_status
+            .average_speed = value.clone().try_into().unwrap();
+    }
+
+    if let Some(value) = data.get(vss::VSS_VEHICLE_TRAVELED_DISTANCE_SINCESTART) {
+      vehicle_status
+      .snapshot_data
+      .mut_or_insert_default()
+      .traveled_distance_since_start = value.clone().try_into().unwrap();
+    }
+
+    if let Some(value) = data.get(vss::VSS_VEHICLE_CHASSIS_AXIS_ROW1_WHEEL_LEFT_BRAKE_PADWEAR) {
+      vehicle_status
+      .snapshot_data
+      .mut_or_insert_default()
+      .left_brake_padWear = value.clone().try_into().unwrap();
+    }
+
+    if let Some(value) = data.get(vss::VSS_VEHICLE_EMISSIONS_CO2) {
+      vehicle_status
+      .snapshot_data
+      .mut_or_insert_default()
+      .emissions_co2 = value.clone().try_into().unwrap();
+    }
     // -- end of new parameter
 
     if let Some(value) = data.get(vss::VSS_VEHICLE_CHASSIS_PARKINGBRAKE_ISENGAGED) {
