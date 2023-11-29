@@ -379,7 +379,7 @@ impl KuksaValDatabroker {
 
         let mut vss_data: HashMap<String, Value> = HashMap::new();
         match self
-            .client1
+            .client
             .get(Request::new(GetRequest {
                 entries: entry_requests,
             }))
