@@ -25,18 +25,6 @@ package fms.v4;
 
 import "google/protobuf/timestamp.proto";
 
-enum TimeRelatedStatus{
-  NORMAL = "NORMAL";
-  LIMIT_1 = "LIMIT_1";
-  LIMIT_2 = "LIMIT_2";
-  LIMIT_3 = "LIMIT_3";
-  LIMIT_4 = "LIMIT_4";
-  LIMIT_5 = "LIMIT_5";
-  LIMIT_6 = "LIMIT_6";
-  OTHER = "OTHER";
-  ERROR = "ERROR";
-  NOT_AVAILABLE = "NOT_AVAILABLE";
-}
 
 message AccumulatedData {
   // TBD
@@ -191,7 +179,7 @@ message SnapshotData {
   optional float traveled_distance_since_start = 27;
   optional uint32 left_brake_padWear = 28;
   optional uint32 emissions_co2 = 29;
-  optional TimeRelatedStatus driver1_time_related_status = 30;
+  optional string driver1_time_related_status = 30;
 }
 
 message TachoDriverId {
