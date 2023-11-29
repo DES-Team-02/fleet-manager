@@ -6299,7 +6299,7 @@
         "type": "branch"
       },
       "EmissionsCO2": {
-        "datatype": "int16",
+        "datatype": "uint32",
         "description": "The CO2 emissions.",
         "type": "attribute",
         "unit": "g/km"
