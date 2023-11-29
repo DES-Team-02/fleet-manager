@@ -19,7 +19,7 @@
 
 //! An abstraction of a vehicle's (current) status based on
 //! [Eclipse kuksa.val Databroker](https://github.com/eclipse/kuksa.val).
-//! 
+//!
 use clap::{Arg, ArgMatches, Command};
 use log::{debug, error, info, warn};
 use protobuf::MessageField;
@@ -64,6 +64,16 @@ const SNAPSHOT_VSS_PATHS: &[&str] = &[
     vss::FMS_VEHICLE_TACHOGRAPH_VEHICLESPEED,
     vss::FMS_VEHICLE_TRAVELED_DISTANCE_HIGH_RES,
     vss::VSS_VEHICLE_VEHICLEIDENTIFICATION_VIN,
+
+    // Added Parameter
+    vss::VSS_VEHICLE_SERVICE_DISTANCETOSERVICE,
+    vss::VSS_VEHICLE_CHASSIS_ACCELERATOR_PEDALPOSITION,
+    vss::VSS_VEHICLE_CHASSIS_BRAKE_CIRCUIT1_PEDALPOSITION,
+    vss::VSS_VEHICLE_TRIP_DURATION,
+    vss::VSS_VEHICLE_AVERAGE_SPEED,
+    vss::VSS_VEHICLE_TRAVELED_DISTANCE_SINCESTART,
+    vss::VSS_VEHICLE_CHASSIS_AXIS_ROW1_WHEEL_LEFT_BRAKE_PADWEAR,
+    vss::VSS_VEHICLE_EMISSIONS_CO2,
 ];
 
 const TRIGGER_VSS_PATHS: &[&str] = &[
@@ -105,15 +115,15 @@ mod vss;
 
 /// Adds arguments to an existing command line which can be
 /// used to configure the component's behavior.
-/// 
+///
 /// The following arguments are being added:
-/// 
+///
 /// | long name           | environment variable | default value | description |
 /// |---------------------|----------------------|---------------|-------------|
 /// | *databroker-uri*    | *KUKSA_DATA_BROKER_URI*| `http://127.0.0.1:55555` | The HTTP(S) URI of the kuksa.val Databroker's gRPC endpoint. |
 /// | *default-vin*       | *DEFAULT_VIN*        | `YV2E4C3A5VB180691` | The default VIN to use if the kuksa.val Databroker does not contain the vehicle's VIN. The VIN is used as a tag on measurements written to the InfluxDB server. |
 /// | *timer-interval*    | *TIMER_INTERVAL*     | `5s`          | The time period to wait after polling FMS snapshot data from the kuksa.val Databroker, e.g 5m10s or 1h15m. |
-/// 
+///
 pub fn add_command_line_args(command_line: Command) -> Command {
     command_line
         .arg(
@@ -476,10 +486,10 @@ impl KuksaValDatabroker {
 
 /// Sets up a connection to the Databroker and registers callbacks for
 /// signals that trigger the reporting of the vehicle's current status.
-/// 
+///
 /// Expects to find parameters as defined by [`add_command_line_args`] in the passed
 /// in *args*.
-/// 
+///
 pub async fn init(
     args: &ArgMatches,
     status_publisher: Sender<VehicleStatus>,
@@ -490,7 +500,7 @@ pub async fn init(
         .to_owned();
 
     let mut databroker = KuksaValDatabroker::new(args).await?;
-    let (tx, mut rx) = tokio::sync::mpsc::channel::<FmsTrigger>(50);
+    let (tx, mut rx) = tokio::sync::mpsc::channel::<FmsTrigger>(10);
     let _ = &databroker.register_triggers(tx.clone()).await?;
 
     tokio::task::spawn(async move {

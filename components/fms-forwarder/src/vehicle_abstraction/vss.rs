@@ -69,3 +69,14 @@ pub const FMS_VEHICLE_TACHOGRAPH_DRIVER2_WORKINGSTATE: &str =
 pub const FMS_VEHICLE_TACHOGRAPH_VEHICLESPEED: &str = "Vehicle.Tachograph.VehicleSpeed";
 pub const FMS_VEHICLE_TRAVELED_DISTANCE_HIGH_RES: &str = "Vehicle.TraveledDistanceHighRes";
 pub const VSS_VEHICLE_VEHICLEIDENTIFICATION_VIN: &str = "Vehicle.VehicleIdentification.VIN";
+
+// Added Parameter
+pub const VSS_VEHICLE_SERVICE_DISTANCETOSERVICE: &str = "Vehicle.Service.DistanceToService";
+pub const VSS_VEHICLE_CHASSIS_ACCELERATOR_PEDALPOSITION: &str = "Vehicle.Chassis.Accelerator.PedalPosition";
+pub const VSS_VEHICLE_CHASSIS_BRAKE_CIRCUIT1_PEDALPOSITION: &str = "Vehicle.Chassis.Brake.Circuit1.PedalPosition";
+pub const VSS_VEHICLE_TRIP_DURATION: &str = "Vehicle.TripDuration";
+pub const VSS_VEHICLE_AVERAGE_SPEED: &str = "Vehicle.AverageSpeed";
+pub const VSS_VEHICLE_TRAVELED_DISTANCE_SINCESTART: &str = "Vehicle.TraveledDistanceSinceStart";
+pub const VSS_VEHICLE_CHASSIS_AXIS_ROW1_WHEEL_LEFT_BRAKE_PADWEAR: &str = "Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear";
+pub const VSS_VEHICLE_EMISSIONS_CO2: &str = "Vehicle.EmissionsCO2";
+pub const VSS_VEHICLE_POWERTRAIN_FUELSYSTEM_ABSOLUTE_LEVEL: &str = "Vehicle.Powertrain.FuelSystem.AbsoluteLevel";

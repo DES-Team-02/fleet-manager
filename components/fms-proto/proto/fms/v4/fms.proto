@@ -171,6 +171,13 @@ message SnapshotData {
   repeated AxleLoad vehicle_axles = 22;
   // List of trailers connected to the truck.
   repeated Trailer trailers = 23;
+
+  optional uint32 accelerator_pedalposition = 24;
+  optional uint32 brake_circuit1_pedalposition = 25;
+  optional float trip_duration = 26;
+  optional float traveled_distance_since_start = 27;
+  optional uint32 left_brake_padWear = 28;
+  optional uint32 emissions_co2 = 29;
 }
 
 message TachoDriverId {
@@ -254,7 +261,7 @@ message UptimeData {
   // List of tell tales with the actual status for each tell tale.
   repeated TellTaleInfo tell_tales = 1;
   // The distance in meter to the next service.
-  optional uint64 service_distance = 2;
+  optional float service_distance = 2;
   // The temperature of the engine's coolant liquid in Celsius.
   optional double engine_coolant_temperature = 3;
   // The temperature of the battery pack coolant in Celsius.
@@ -322,4 +329,5 @@ message VehicleStatus {
   AccumulatedData accumulated_data = 14;
   SnapshotData snapshot_data = 15;
   UptimeData uptime_data = 16;
+  optional float average_speed = 17;
 }
