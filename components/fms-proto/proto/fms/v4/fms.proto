@@ -25,6 +25,7 @@ package fms.v4;
 
 import "google/protobuf/timestamp.proto";
 
+
 message AccumulatedData {
   // TBD
 }
@@ -178,6 +179,7 @@ message SnapshotData {
   optional float traveled_distance_since_start = 27;
   optional uint32 left_brake_padWear = 28;
   optional uint32 emissions_co2 = 29;
+  optional string driver1_time_related_status = 30;
 }
 
 message TachoDriverId {

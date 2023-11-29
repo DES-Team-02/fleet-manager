@@ -80,3 +80,4 @@ pub const VSS_VEHICLE_TRAVELED_DISTANCE_SINCESTART: &str = "Vehicle.TraveledDist
 pub const VSS_VEHICLE_CHASSIS_AXIS_ROW1_WHEEL_LEFT_BRAKE_PADWEAR: &str = "Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear";
 pub const VSS_VEHICLE_EMISSIONS_CO2: &str = "Vehicle.EmissionsCO2";
 pub const VSS_VEHICLE_POWERTRAIN_FUELSYSTEM_ABSOLUTE_LEVEL: &str = "Vehicle.Powertrain.FuelSystem.AbsoluteLevel";
+pub const FMS_VEHICLE_DRIVER1_TIMERELATED_STATUS: &str = "Vehicle.Tachograph.Driver.Driver1.TimeRelatedStatus";
