@@ -52,8 +52,11 @@ pub const FIELD_TOTAL_ELECTRIC_MOTOR_HOURS: &str = "totalElectricMotorHours";
 pub const FIELD_TOTAL_ENGINE_HOURS: &str = "totalEngineHours";
 pub const FIELD_WHEEL_BASED_SPEED: &str = "wheelBasedSpeed";
 
+pub const FIELD_SERVICE_DISTANCE: &str = "serviceDistance";
+
 pub const MEASUREMENT_HEADER: &str = "header";
 pub const MEASUREMENT_SNAPSHOT: &str = "snapshot";
+pub const MEASUREMENT_UPTIME: &str = "uptime";
 
 pub const TAG_TRIGGER: &str = "trigger";
 pub const TAG_VIN: &str = "vin";
@@ -61,4 +64,3 @@ pub const TAG_VIN: &str = "vin";
 pub mod connection;
 #[cfg(feature = "writer")]
 pub mod writer;
-

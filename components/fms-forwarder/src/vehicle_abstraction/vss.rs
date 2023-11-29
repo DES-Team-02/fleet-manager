@@ -69,3 +69,4 @@ pub const FMS_VEHICLE_TACHOGRAPH_DRIVER2_WORKINGSTATE: &str =
 pub const FMS_VEHICLE_TACHOGRAPH_VEHICLESPEED: &str = "Vehicle.Tachograph.VehicleSpeed";
 pub const FMS_VEHICLE_TRAVELED_DISTANCE_HIGH_RES: &str = "Vehicle.TraveledDistanceHighRes";
 pub const VSS_VEHICLE_VEHICLEIDENTIFICATION_VIN: &str = "Vehicle.VehicleIdentification.VIN";
+pub const VSS_VEHICLE_SERVICE_DISTANCETOSERVICE: &str = "Vehicle.Service.DistanceToService";

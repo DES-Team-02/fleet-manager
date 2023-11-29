@@ -66,7 +66,7 @@ fn get_headers_as_map(headers: &BorrowedHeaders) -> HashMap<String, String> {
                 .value
                 .and_then(|v| String::from_utf8(v.to_vec()).ok()),
         ) {
-            (HEADER_NAME_ORIG_ADDRESS, Some(value)) => {
+            (zz_NAME_ORIG_ADDRESS, Some(value)) => {
                 if let Some((_topic, props)) = value.rsplit_once("/?") {
                     debug!("found property bag in {HEADER_NAME_ORIG_ADDRESS} header: {props}");
                     add_property_bag_to_map(props.to_string(), &mut result);

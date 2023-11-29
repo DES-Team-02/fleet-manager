@@ -172,6 +172,34 @@ fn build_snapshot_measurement(
     }
 }
 
+
+fn build_uptime_measurement(
+    vin: &str,
+    trigger: &str,
+    created_date_time: u128,
+    vehicle_status: &VehicleStatus,
+) -> Option<Measurement> {
+
+    let mut builder = Measurement::builder(crate::MEASUREMENT_UPTIME)
+        .tag(crate::TAG_TRIGGER, trigger)
+        .tag(crate::TAG_VIN, vin)
+        .field(crate::FIELD_CREATED_DATE_TIME, created_date_time);
+
+    if let Some(uptime_data) = vehicle_status.uptime_data.clone().into_option() {
+        if let Some(value) = uptime_data.service_distance {
+            builder = builder.field(crate::FIELD_SERVICE_DISTANCE, value);
+        }
+    }
+
+    match builder.build() {
+        Ok(measurement) => Some(measurement),
+        Err(e) => {
+            debug!("failed to create uptime Measurement: {e}");
+            None
+        }
+    }
+}
+
 /// A facade to an InfluxDB server for publishing Vehicle status information.
 pub struct InfluxWriter {
     influx_con: InfluxConnection,
@@ -180,7 +208,7 @@ pub struct InfluxWriter {
 impl InfluxWriter {
 
     /// Creates a new writer.
-    /// 
+    ///
     /// Determines the parameters necessary for creating the writer from values specified on
     /// the command line or via environment variables as defined by [`super::add_command_line_args`].
     pub fn new(args: &ArgMatches) -> Result<Self, Box<dyn std::error::Error>> {
@@ -188,14 +216,14 @@ impl InfluxWriter {
     }
 
     /// Writes Vehicle status information as measurements to the InfluxDB server.
-    /// 
+    ///
     /// The measurements are being written to the *bucket* in the *organization* that have been
     /// configured via command line arguments and/or environment variables passed in to [`self::InfluxWriter::new()`].
-    /// 
+    ///
     /// This function writes the current vehicle status to InfluxDB by means of two measurements:
-    /// 
+    ///
     /// * *header* - contains the following tags/fields:
-    /// 
+    ///
     ///   | Type  | Name            | Description                      |
     ///   | ----- | --------------- | -------------------------------- |
     ///   | tag   | trigger         | The type of event that triggered the reporting of the vehicle status. |
@@ -208,9 +236,9 @@ impl InfluxWriter {
     ///   | field | engineTotalFuelUsed | The total fuel the vehicle has used during its lifetime in MilliLitres. |
     ///   | field | driver1Id | The unique identification of driver one in a Member State. |
     ///   | field | driver1IdCardIssuer | The country alpha code of the Member State having issued driver one's card. |
-    /// 
+    ///
     /// * *snapshot* - contains the following tags/fields:
-    /// 
+    ///
     ///   | Type  | Name            | Description                      |
     ///   | ----- | --------------- | -------------------------------- |
     ///   | tag   | trigger         | The type of event that triggered the reporting of the vehicle status. |
@@ -237,7 +265,7 @@ impl InfluxWriter {
     ///   | field | driver2WorkingState | Tachograph Working state of the driver two. |
     ///   | field | ambientAirTemperature | The Ambient air temperature in Celsius. |
     ///   | field | parkingBrakeSwitch | Switch signal which indicates when the parking brake is set. |
-    /// 
+    ///
     pub async fn write_vehicle_status(&self, vehicle_status: &VehicleStatus) {
         if vehicle_status.vin.is_empty() {
             debug!("ignoring vehicle status without VIN ...");
@@ -269,7 +297,7 @@ impl InfluxWriter {
                 return;
             },
         };
-    
+
         let mut measurements: Vec<Measurement> = Vec::new();
         if let Some(measurement) = build_header_measurement(
             vehicle_status.vin.as_str(),
@@ -287,6 +315,16 @@ impl InfluxWriter {
             vehicle_status,
         ) {
             debug!("writing snapshot measurement to influxdb");
+            measurements.push(measurement);
+        }
+
+        if let Some(measurement) = build_uptime_measurement(
+            vehicle_status.vin.as_str(),
+            &trigger,
+            created_timestamp,
+            vehicle_status,
+        ) {
+            debug!("writing uptime measurement to influxdb");
             measurements.push(measurement);
         }
 

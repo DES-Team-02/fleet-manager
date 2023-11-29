@@ -2,7 +2,7 @@
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -179,10 +179,10 @@ Vehicle.Exterior.AirTemperature:
 Vehicle.IsMoving:
   datatype: boolean
   type: sensor
-   
+
 Vehicle.Powertrain.Brake:
   type: branch
-  description: Recuperation data. 
+  description: Recuperation data.
 
 Vehicle.Powertrain.Brake.ActualRetarderPercentage:
   datatype: uint8
@@ -281,7 +281,7 @@ Vehicle.Powertrain.FuelSystem.AccumulatedConsumption:
   type: sensor
   unit: ml
   description: Accumulated amount of fuel used during vehicle operation.
-    
+
 Vehicle.Powertrain.FuelSystem.Range:
   datatype: uint32
   type: sensor
@@ -337,7 +337,7 @@ Vehicle.Powertrain.TractionBattery.StateOfCharge.Current:
 
 
 Vehicle.Service.DistanceToService:
-  datatype: float
+  datatype: int64
   type: sensor
 
 
