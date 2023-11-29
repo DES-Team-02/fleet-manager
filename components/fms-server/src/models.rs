@@ -332,7 +332,7 @@ pub struct VehiclePositionResponseObject {
 #[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
 pub struct VehicleInsurcanceReportResponseObject {
     #[serde(rename = "vehicleInsurcanceReportResponse")]
-    pub vehicle_insurance_report_response: models::VehicleInsurcanceReportResponseObjectVehicleInsurcanceReportResponse,
+    pub vehicle_insurance_report_response: models::VehicleInsuranceReportResponseObjectVehicleInsuranceReportResponse,
 
     /// This will be set to true if the result set was too large to be sent back in one reply. A new request must be sent to get the rest of the vehicle positions, where the starttime parameter must be supplied. The starttime should be set to the latest ReceivedDateTime + 1 second of the last vehicle in the result set of this message.
     #[serde(rename = "moreDataAvailable")]
@@ -361,7 +361,7 @@ pub struct VehicleInsuranceReportResponseObjectVehicleInsuranceReportResponse {
 pub struct VehiclePositionResponseObjectVehiclePositionResponse {
     #[serde(rename = "vehiclePositions")]
     #[serde(skip_serializing_if="Option::is_none")]
-    pub vehicle_positions: Option<Vec<models::VehicleInsuranceReportObject>>,
+    pub vehicle_positions: Option<Vec<models::VehiclePositionObject>>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

@@ -70,7 +70,7 @@ async fn root() -> &'static str {
 }
 
 async fn get_vehicleposition(
-State(influx_server): State<Arc<InfluxReader>>,
+    State(influx_server): State<Arc<InfluxReader>>,
     Query(params): Query<HashMap<String, String>>,
 ) -> Result<Json<serde_json::Value>, StatusCode> {
     let start_time = params.get("starttime").map_or(0, |text| {
@@ -110,6 +110,7 @@ State(influx_server): State<Arc<InfluxReader>>,
             StatusCode::INTERNAL_SERVER_ERROR
         })
 }
+
 
 async fn get_vehicles(
     State(influx_server): State<Arc<InfluxReader>>,
