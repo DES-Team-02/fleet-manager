@@ -55,6 +55,12 @@ fn build_header_measurement(
         builder = builder.field(crate::FIELD_ENGINE_TOTAL_FUEL_USED, value);
     }
 
+    // New Parameters
+    if let Some(value) = vehicle_status.average_speed {
+      builder = builder.field(crate::FIELD_AVERAGE_SPEED, value);
+    }
+    // -- end of new parameters
+
     if let Some(tacho_driver_id) = vehicle_status.driver1_id.clone().into_option()
         .and_then(|driver_id| driver_id.tacho_driver_identification.into_option()) {
 
@@ -118,12 +124,26 @@ fn build_snapshot_measurement(
             builder = builder.field(crate::FIELD_PARKING_BREAK_SWITCH, value);
         }
 
+        // New Parameters
         if let Some(value) = snapshot_data.accelerator_pedalposition {
           builder = builder.field(crate::FIELD_ACCELERATOR_PEDALPOSITION, value);
         }
         if let Some(value) = snapshot_data.brake_circuit1_pedalposition {
           builder = builder.field(crate::FIELD_BRAKE_CIRCUIT1_PEDALPOSITION, value);
         }
+        if let Some(value) = snapshot_data.trip_duration {
+          builder = builder.field(crate::FIELD_TRIP_DURATION, value);
+        }
+        if let Some(value) = snapshot_data.traveled_distance_since_start {
+          builder = builder.field(crate::FIELD_TRAVELED_DISTANCE_SINCESTART, value);
+        }
+        if let Some(value) = snapshot_data.left_brake_padWear {
+          builder = builder.field(crate::FIELD_WHEEL_LEFT_BRAKE_PADWEAR, value);
+        }
+        if let Some(value) = snapshot_data.emissions_co2 {
+          builder = builder.field(crate::FIELD_EMISSIONS_CO2, value);
+        }
+        // end of new parameters
 
         if let Some(current_location) = snapshot_data.gnss_position.into_option() {
             builder = builder
