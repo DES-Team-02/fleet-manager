@@ -10,7 +10,7 @@ current,Vehicle.AverageSpeed,0.225,0.298
 current,Vehicle.Service.DistanceToService,65.28,0.1
 current,Vehicle.TraveledDistanceSinceStart,230.8,0.1
 current,Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear,20,0.298
-current,Vehicle.EmissionsCO2,0.22,0.298
+current,Vehicle.EmissionsCO2,22,0.298
 current,Vehicle.Powertrain.FuelSystem.AbsoluteLevel,50.01,0.298
 current,Vehicle.VehicleIdentification.VIN,YV2E4C3A5VB18069,0.1
 current,Vehicle.Tachograph.Driver.Driver1.WorkingState,DRIVE,0.0001
@@ -23,7 +23,7 @@ current,Vehicle.AverageSpeed,0.275,0.298
 current,Vehicle.Service.DistanceToService,14.88,0.1
 current,Vehicle.TraveledDistanceSinceStart,530.8,0.1
 current,Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear,30,0.298
-current,Vehicle.EmissionsCO2,0.27,0.298
+current,Vehicle.EmissionsCO2,27,0.298
 current,Vehicle.Powertrain.FuelSystem.AbsoluteLevel,50.01,0.298
 current,Vehicle.VehicleIdentification.VIN,YV2E4C3A5VB180694,0.5
 current,Vehicle.Tachograph.Driver.Driver1.WorkingState,DRIVE,0.0004
@@ -36,5 +36,5 @@ current,Vehicle.AverageSpeed,0.475,0.298
 current,Vehicle.Service.DistanceToService,54.88,0.1
 current,Vehicle.TraveledDistanceSinceStart,830.8,0.1
 current,Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear,30,0.298
-current,Vehicle.EmissionsCO2,0.67,0.298
+current,Vehicle.EmissionsCO2,67,0.298
 current,Vehicle.Powertrain.FuelSystem.AbsoluteLevel,40.01,0.298

@@ -77,6 +77,6 @@ pub const VSS_VEHICLE_CHASSIS_BRAKE_CIRCUIT1_PEDALPOSITION: &str = "Vehicle.Chas
 pub const VSS_VEHICLE_TRIP_DURATION: &str = "Vehicle.TripDuration";
 pub const VSS_VEHICLE_AVERAGE_SPEED: &str = "Vehicle.AverageSpeed";
 pub const VSS_VEHICLE_TRAVELED_DISTANCE_SINCESTART: &str = "Vehicle.TraveledDistanceSinceStart";
-pub const VSS_VEHICLE_CHASSIS_AXIS_ROW1_WHEEL_LEFT_BRAKE_PADWEAR:&str "Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear"
-pub const VSS_VEHICLE_EMISSIONS_CO2:&str "Vehicle.EmissionsCO2"
-pub const VSS_VEHICLE_POWERTRAIN_FUELSYSTEM_ABSOLUTE_LEVEL:&str "Vehicle.Powertrain.FuelSystem.AbsoluteLevel"
+pub const VSS_VEHICLE_CHASSIS_AXIS_ROW1_WHEEL_LEFT_BRAKE_PADWEAR: &str = "Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear";
+pub const VSS_VEHICLE_EMISSIONS_CO2: &str = "Vehicle.EmissionsCO2";
+pub const VSS_VEHICLE_POWERTRAIN_FUELSYSTEM_ABSOLUTE_LEVEL: &str = "Vehicle.Powertrain.FuelSystem.AbsoluteLevel";
