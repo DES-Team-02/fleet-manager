@@ -52,7 +52,10 @@ pub const FIELD_TOTAL_ELECTRIC_MOTOR_HOURS: &str = "totalElectricMotorHours";
 pub const FIELD_TOTAL_ENGINE_HOURS: &str = "totalEngineHours";
 pub const FIELD_WHEEL_BASED_SPEED: &str = "wheelBasedSpeed";
 
+// Added Parameter
 pub const FIELD_SERVICE_DISTANCE: &str = "serviceDistance";
+pub const FIELD_ACCELERATOR_PEDALPOSITION: &str = "acceleratorPedalposition";
+pub const FIELD_BRAKE_CIRCUIT1_PEDALPOSITION: &str = "brakeCirtuit1Pedalposition";
 
 pub const MEASUREMENT_HEADER: &str = "header";
 pub const MEASUREMENT_SNAPSHOT: &str = "snapshot";

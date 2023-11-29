@@ -118,6 +118,13 @@ fn build_snapshot_measurement(
             builder = builder.field(crate::FIELD_PARKING_BREAK_SWITCH, value);
         }
 
+        if let Some(value) = snapshot_data.accelerator_pedalposition {
+          builder = builder.field(crate::FIELD_ACCELERATOR_PEDALPOSITION, value);
+        }
+        if let Some(value) = snapshot_data.brake_circuit1_pedalposition {
+          builder = builder.field(crate::FIELD_BRAKE_CIRCUIT1_PEDALPOSITION, value);
+        }
+
         if let Some(current_location) = snapshot_data.gnss_position.into_option() {
             builder = builder
                 .field(crate::FIELD_LATITUDE, current_location.latitude)

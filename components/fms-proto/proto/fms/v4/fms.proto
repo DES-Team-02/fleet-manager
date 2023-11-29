@@ -171,6 +171,9 @@ message SnapshotData {
   repeated AxleLoad vehicle_axles = 22;
   // List of trailers connected to the truck.
   repeated Trailer trailers = 23;
+  
+  optional uint32 accelerator_pedalposition = 24;
+  optional uint32 brake_circuit1_pedalposition = 25;
 }
 
 message TachoDriverId {

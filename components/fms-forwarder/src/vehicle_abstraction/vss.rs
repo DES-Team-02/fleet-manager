@@ -69,4 +69,8 @@ pub const FMS_VEHICLE_TACHOGRAPH_DRIVER2_WORKINGSTATE: &str =
 pub const FMS_VEHICLE_TACHOGRAPH_VEHICLESPEED: &str = "Vehicle.Tachograph.VehicleSpeed";
 pub const FMS_VEHICLE_TRAVELED_DISTANCE_HIGH_RES: &str = "Vehicle.TraveledDistanceHighRes";
 pub const VSS_VEHICLE_VEHICLEIDENTIFICATION_VIN: &str = "Vehicle.VehicleIdentification.VIN";
+
+// Added Parameter
 pub const VSS_VEHICLE_SERVICE_DISTANCETOSERVICE: &str = "Vehicle.Service.DistanceToService";
+pub const VSS_VEHICLE_CHASSIS_ACCELERATOR_PEDALPOSITION: &str = "Vehicle.Chassis.Accelerator.PedalPosition";
+pub const VSS_VEHICLE_CHASSIS_BRAKE_CIRCUIT1_PEDALPOSITION: &str = "Vehicle.Chassis.Brake.Circuit1.PedalPosition";
