@@ -8576,7 +8576,7 @@
       "Service": {
         "children": {
           "DistanceToService": {
-            "datatype": "int64",
+            "datatype": "float",
             "description": "Remaining distance to service (of any kind). Negative values indicate service overdue.",
             "type": "sensor",
             "unit": "km"

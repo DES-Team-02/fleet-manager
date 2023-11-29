@@ -254,7 +254,7 @@ message UptimeData {
   // List of tell tales with the actual status for each tell tale.
   repeated TellTaleInfo tell_tales = 1;
   // The distance in meter to the next service.
-  optional uint64 service_distance = 2;
+  optional float service_distance = 2;
   // The temperature of the engine's coolant liquid in Celsius.
   optional double engine_coolant_temperature = 3;
   // The temperature of the battery pack coolant in Celsius.

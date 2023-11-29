@@ -234,10 +234,10 @@ pub fn new_vehicle_status(data: HashMap<String, Value>, default_vin: &String) ->
     }
 
     if let Some(value) = data.get(vss::VSS_VEHICLE_SERVICE_DISTANCETOSERVICE) {
-        vehicle_status
-            .uptime_data
-            .mut_or_insert_default()
-            .service_distance = value.clone().try_into().unwrap();
+      vehicle_status.
+      uptime_data.
+      mut_or_insert_default().
+      service_distance = value.clone().try_into().unwrap();
     }
 
     if let Some(value) = data.get(vss::VSS_VEHICLE_CURRENTLOCATION_LATITUDE) {
