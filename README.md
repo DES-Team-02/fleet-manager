@@ -19,6 +19,8 @@ Here is data you can check:
 
 Every data is based on [vss.json spec](/spec/overlay/vss.json), so if the car or simulator is following the format, application will work fine.
 
+A new endpoint, rfms/insurancereport, was meant to be implemented in the frms server. This endpoint is designed to receive a Vehicle Identification Number (VIN) as a query parameter and, in turn, generate a .json file. The contents of this file mirror the information currently presented on the dashboard. This addition not only expands the capabilities of our system by facilitating targeted data retrieval but also offers users a convenient means to access and utilize detailed vehicle information. Unfortnatly, the changes to the frms server did not work at the time the hackathon ended. <br>
+
 # Demo
 <img src="img/demo.png">
 
