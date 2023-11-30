@@ -28,3 +28,4 @@ docker compose -f ./fms-blueprint-compose.yaml up
 ```
 
 # Architecture
+<img src="fleet-management-architecture.png">
