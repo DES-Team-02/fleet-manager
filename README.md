@@ -17,6 +17,8 @@ Here is data you can check:
 - Fuel consumption
 - Driving Score 
 
+Every data is based on [vss.json spec](/spec/overlay/vss.json), so if the car or simulator is following the format, application will work fine.
+
 # Demo
 <img src="img/demo.png">
 
