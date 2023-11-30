@@ -222,7 +222,7 @@
         },
         "gridPos": {
           "h": 9,
-          "w": 9,
+          "w": 11,
           "x": 0,
           "y": 8
         },
@@ -273,6 +273,103 @@
         },
         "fieldConfig": {
           "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 10,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "decimals": 0,
+            "displayName": "Accelarator",
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 27,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "PDC312342D5DCA611"
+            },
+            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"acceleratorPedalposition\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "refId": "A"
+          }
+        ],
+        "title": "Accelerator",
+        "transparent": true,
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "PDC312342D5DCA611"
+        },
+        "fieldConfig": {
+          "defaults": {
             "decimals": 1,
             "displayName": "Average Speed Change",
             "mappings": [],
@@ -300,10 +397,10 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 9,
-          "w": 6,
-          "x": 9,
-          "y": 8
+          "h": 10,
+          "w": 3,
+          "x": 0,
+          "y": 17
         },
         "id": 21,
         "options": {
@@ -406,8 +503,8 @@
         "gridPos": {
           "h": 9,
           "w": 9,
-          "x": 15,
-          "y": 8
+          "x": 3,
+          "y": 17
         },
         "id": 15,
         "options": {
@@ -447,6 +544,98 @@
             }
           }
         ],
+        "transparent": true,
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "PDC312342D5DCA611"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 10,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 12,
+          "x": 12,
+          "y": 20
+        },
+        "id": 28,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "PDC312342D5DCA611"
+            },
+            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"brakeCircuit1Pedalposition\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "refId": "A"
+          }
+        ],
+        "title": "Brake",
         "transparent": true,
         "type": "timeseries"
       },
@@ -510,7 +699,7 @@
           "h": 5,
           "w": 12,
           "x": 0,
-          "y": 17
+          "y": 27
         },
         "id": 12,
         "options": {
@@ -602,8 +791,8 @@
         "gridPos": {
           "h": 5,
           "w": 12,
-          "x": 12,
-          "y": 17
+          "x": 0,
+          "y": 32
         },
         "id": 30,
         "options": {
@@ -641,49 +830,15 @@
           "type": "influxdb",
           "uid": "PDC312342D5DCA611"
         },
+        "description": "",
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "palette-classic"
+              "mode": "thresholds"
             },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 20,
-              "gradientMode": "opacity",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineStyle": {
-                "fill": "solid"
-              },
-              "lineWidth": 10,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": true,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "decimals": 0,
-            "displayName": "Accelarator",
+            "displayName": "Occurance",
             "mappings": [],
-            "max": 100,
-            "min": 0,
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -701,23 +856,73 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 12,
-          "w": 4,
-          "x": 0,
-          "y": 22
+          "h": 8,
+          "w": 3,
+          "x": 12,
+          "y": 32
         },
-        "id": 27,
+        "id": 31,
         "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
           },
-          "tooltip": {
-            "mode": "single",
-            "sort": "none"
+          "textMode": "auto"
+        },
+        "pluginVersion": "9.5.14",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "PDC312342D5DCA611"
+            },
+            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"tachographSpeed\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> duplicate(column: \"_value\", as: \"original_value\")\n  // 변화량 계산\n  |> difference(columns: [\"_value\"], nonNegative: false)\n  // 새로운 필드 diff에 변화량의 절대값 저장\n  |> map(fn: (r) => ({\n      _time: r._time,\n      _diff: if ((r.original_value - r._diff) == 0) then 0.0 else (r.original_value / (r.original_value - r._value) - 1.0) * 100.0,\n      vin: r.vin\n    }))\n  |> filter(fn: (r) => r[\"_diff\"] < -50 )\n  |> yield(name: \"with_abs_diff\")\n",
+            "refId": "A"
           }
+        ],
+        "title": "Sudden Brakes",
+        "transformations": [
+          {
+            "id": "calculateField",
+            "options": {
+              "mode": "index",
+              "reduce": {
+                "reducer": "sum"
+              },
+              "replaceFields": true
+            }
+          }
+        ],
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "PDC312342D5DCA611"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 9,
+          "x": 15,
+          "y": 32
+        },
+        "id": 32,
+        "options": {
+          "dedupStrategy": "none",
+          "enableLogDetails": true,
+          "prettifyLogMessage": false,
+          "showCommonLabels": false,
+          "showLabels": false,
+          "showTime": true,
+          "sortOrder": "Ascending",
+          "wrapLogMessage": false
         },
         "targets": [
           {
@@ -725,19 +930,124 @@
               "type": "influxdb",
               "uid": "PDC312342D5DCA611"
             },
-            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"acceleratorPedalposition\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"tachographSpeed\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> duplicate(column: \"_value\", as: \"original_value\")\n  // 변화량 계산\n  |> difference(columns: [\"_value\"], nonNegative: false)\n  // 새로운 필드 diff에 변화량의 절대값 저장\n  |> map(fn: (r) => ({\n      _time: r._time,\n      _diff: if ((r.original_value - r._diff) == 0) then 0.0 else (r.original_value / (r.original_value - r._value) - 1.0) * 100.0,\n      vin: r.vin\n    }))\n  |> filter(fn: (r) => r[\"_diff\"] < -50 )\n  |> map(fn: (r) => ({\n    _time: r._time,\n    log: string(v: r._diff),\n    vin: r.vin\n  }))\n  |> yield(name: \"with_abs_diff\")\n",
             "refId": "A"
           }
         ],
-        "title": "Accelerator",
-        "transparent": true,
-        "type": "timeseries"
+        "title": "Sudden Brakes",
+        "transformations": [],
+        "type": "logs"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 40
+        },
+        "id": 23,
+        "panels": [],
+        "title": "Car Maintenance",
+        "type": "row"
       },
       {
         "datasource": {
           "type": "influxdb",
           "uid": "PDC312342D5DCA611"
         },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-RdYlGr"
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 30
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "catalystFuelLevel"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Left Brake Pad"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "fuelLevel1"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Right Brake Pad"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 41
+        },
+        "id": 33,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.14",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "PDC312342D5DCA611"
+            },
+            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"fuelLevel1\" or r[\"_field\"] == \"catalystFuelLevel\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"vin\"])\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "refId": "A"
+          }
+        ],
+        "title": "BrakePad Health",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "PDC312342D5DCA611"
+        },
+        "description": "",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -757,8 +1067,8 @@
                 "tooltip": false,
                 "viz": false
               },
-              "lineInterpolation": "smooth",
-              "lineWidth": 10,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
               "pointSize": 5,
               "scaleDistribution": {
                 "type": "linear"
@@ -773,8 +1083,117 @@
                 "mode": "off"
               }
             },
+            "decimals": 0,
             "mappings": [],
             "max": 100,
+            "min": 0,
+            "noValue": "N/A",
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 5
+                },
+                {
+                  "color": "green",
+                  "value": 30
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "fuelLevel1"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "First Tank (${__field.labels.vin})"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "fuelLevel2"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Second Tank (${__field.labels.vin})"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "catalystFuelLevel"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "AdBlue (${__field.labels.vin})"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 41
+        },
+        "id": 36,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.5.14",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "PDC312342D5DCA611"
+            },
+            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"fuelLevel1\" or r._field == \"fuelLevel2\" or r[\"_field\"] == \"catalystFuelLevel\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"vin\"])\n  |> group(columns: [\"vin\", \"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "refId": "A"
+          }
+        ],
+        "title": "Fuel Levels",
+        "transformations": [],
+        "transparent": true,
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "PDC312342D5DCA611"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-RdYlGr"
+            },
+            "mappings": [],
+            "max": 300,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
@@ -788,68 +1207,131 @@
                   "value": 80
                 }
               ]
-            }
+            },
+            "unit": "lengthkm"
           },
           "overrides": []
         },
         "gridPos": {
-          "h": 12,
-          "w": 4,
-          "x": 12,
-          "y": 22
+          "h": 3,
+          "w": 12,
+          "x": 0,
+          "y": 46
         },
-        "id": 28,
+        "id": 35,
         "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
+          "displayMode": "gradient",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
           },
-          "tooltip": {
-            "mode": "single",
-            "sort": "none"
-          }
+          "showUnfilled": true,
+          "valueMode": "color"
         },
+        "pluginVersion": "9.5.14",
         "targets": [
           {
             "datasource": {
               "type": "influxdb",
               "uid": "PDC312342D5DCA611"
             },
-            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  // brakePosition\n  |> filter(fn: (r) => r[\"_field\"] == \"brakeCircuit1Pedalposition\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"catalystFuelLevel\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"vin\"])\n  |> group(columns: [\"vin\", \"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
             "refId": "A"
           }
         ],
-        "title": "Brake",
-        "transparent": true,
-        "type": "timeseries"
+        "title": "HealthCheck Needed In",
+        "type": "bargauge"
       },
       {
-        "collapsed": true,
+        "collapsed": false,
         "gridPos": {
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 34
-        },
-        "id": 23,
-        "panels": [],
-        "title": "Car Maintenance",
-        "type": "row"
-      },
-      {
-        "collapsed": true,
-        "gridPos": {
-          "h": 1,
-          "w": 24,
-          "x": 0,
-          "y": 35
+          "y": 49
         },
         "id": 22,
         "panels": [],
         "title": "Eco-friendly",
         "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "PDC312342D5DCA611"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "dark-green",
+                  "value": null
+                },
+                {
+                  "color": "dark-yellow",
+                  "value": 15
+                },
+                {
+                  "color": "dark-orange",
+                  "value": 60
+                },
+                {
+                  "color": "dark-red",
+                  "value": 85
+                }
+              ]
+            },
+            "unit": "masskg"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 50
+        },
+        "id": 34,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "",
+            "limit": 2,
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "9.5.14",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "PDC312342D5DCA611"
+            },
+            "query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"fuelLevel1\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"vin\"])\n  |> group(columns: [\"vin\", \"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "refId": "A"
+          }
+        ],
+        "title": "CO2 Emission",
+        "type": "gauge"
       }
     ],
     "refresh": false,
@@ -863,9 +1345,11 @@
           "current": {
             "selected": true,
             "text": [
+              "YV2E4C3A5VB180691",
               "YV2E4C3A5VB180692"
             ],
             "value": [
+              "YV2E4C3A5VB180691",
               "YV2E4C3A5VB180692"
             ]
           },
@@ -891,13 +1375,13 @@
       ]
     },
     "time": {
-      "from": "2023-11-30T07:55:19.051Z",
-      "to": "2023-11-30T07:57:03.341Z"
+      "from": "now-15m",
+      "to": "now"
     },
     "timepicker": {},
     "timezone": "",
     "title": "kkim",
     "uid": "e0864754-2c89-4357-bd3e-40e8bf1700c5",
-    "version": 2,
+    "version": 3,
     "weekStart": ""
   }

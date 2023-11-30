@@ -1,0 +1,1406 @@
+{
+	"annotations": {
+	  "list": [
+		{
+		  "builtIn": 1,
+		  "datasource": {
+			"type": "grafana",
+			"uid": "-- Grafana --"
+		  },
+		  "enable": true,
+		  "hide": true,
+		  "iconColor": "rgba(0, 211, 255, 1)",
+		  "name": "Annotations & Alerts",
+		  "target": {
+			"limit": 100,
+			"matchAny": false,
+			"tags": [],
+			"type": "dashboard"
+		  },
+		  "type": "dashboard"
+		}
+	  ]
+	},
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"graphTooltip": 0,
+	"id": 2,
+	"links": [],
+	"liveNow": false,
+	"panels": [
+	  {
+		"collapsed": false,
+		"gridPos": {
+		  "h": 1,
+		  "w": 24,
+		  "x": 0,
+		  "y": 0
+		},
+		"id": 21,
+		"panels": [],
+		"title": "Driving History",
+		"type": "row"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "fixedColor": "#808080",
+			  "mode": "thresholds",
+			  "seriesBy": "last"
+			},
+			"custom": {
+			  "axisCenteredZero": false,
+			  "axisColorMode": "text",
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 10,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"legend": false,
+				"tooltip": false,
+				"viz": false
+			  },
+			  "lineInterpolation": "linear",
+			  "lineWidth": 1,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "always",
+			  "spanNulls": false,
+			  "stacking": {
+				"group": "A",
+				"mode": "none"
+			  },
+			  "thresholdsStyle": {
+				"mode": "dashed"
+			  }
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "orange",
+				  "value": 60
+				},
+				{
+				  "color": "dark-red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "velocitykmh"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 12,
+		  "x": 0,
+		  "y": 1
+		},
+		"id": 8,
+		"options": {
+		  "legend": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"displayMode": "list",
+			"placement": "bottom",
+			"showLegend": true
+		  },
+		  "tooltip": {
+			"mode": "single",
+			"sort": "none"
+		  }
+		},
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"tachographSpeed\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Tachograph Speed",
+		"transformations": [
+		  {
+			"id": "labelsToFields",
+			"options": {
+			  "keepLabels": [
+				"vin"
+			  ],
+			  "valueLabel": "vin"
+			}
+		  }
+		],
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisCenteredZero": false,
+			  "axisColorMode": "text",
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "bars",
+			  "fillOpacity": 0,
+			  "gradientMode": "none",
+			  "hideFrom": {
+				"legend": false,
+				"tooltip": false,
+				"viz": false
+			  },
+			  "lineInterpolation": "stepBefore",
+			  "lineWidth": 1,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "always",
+			  "spanNulls": true,
+			  "stacking": {
+				"group": "A",
+				"mode": "none"
+			  },
+			  "thresholdsStyle": {
+				"mode": "dashed"
+			  }
+			},
+			"mappings": [],
+			"max": 200,
+			"noValue": "0",
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 70
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 12,
+		  "x": 12,
+		  "y": 1
+		},
+		"id": 16,
+		"options": {
+		  "legend": {
+			"calcs": [],
+			"displayMode": "list",
+			"placement": "bottom",
+			"showLegend": true
+		  },
+		  "tooltip": {
+			"mode": "single",
+			"sort": "none"
+		  }
+		},
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"tachographSpeed\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> duplicate(column: \"_value\", as: \"original_value\")\n  // 변화량 계산\n  |> difference(columns: [\"_value\"], nonNegative: false)\n  // 새로운 필드 diff에 변화량의 절대값 저장\n  |> map(fn: (r) => ({\n      _time: r._time,\n      _diff: if ((r.original_value - r._diff) == 0) then 0.0 else (r.original_value / (r.original_value - r._value) - 1.0) * 100.0,\n      vin: r.vin\n    }))\n  |> yield(name: \"with_abs_diff\")\n",
+			"refId": "A"
+		  }
+		],
+		"title": "Speed Change",
+		"transformations": [],
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisCenteredZero": false,
+			  "axisColorMode": "text",
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 10,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"legend": false,
+				"tooltip": false,
+				"viz": false
+			  },
+			  "lineInterpolation": "linear",
+			  "lineWidth": 1,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "auto",
+			  "spanNulls": false,
+			  "stacking": {
+				"group": "A",
+				"mode": "none"
+			  },
+			  "thresholdsStyle": {
+				"mode": "off"
+			  }
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "rotrpm"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 12,
+		  "x": 0,
+		  "y": 10
+		},
+		"id": 15,
+		"options": {
+		  "legend": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"displayMode": "list",
+			"placement": "bottom",
+			"showLegend": true
+		  },
+		  "tooltip": {
+			"mode": "single",
+			"sort": "none"
+		  }
+		},
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"engineSpeed\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Engine Speed",
+		"transformations": [
+		  {
+			"id": "labelsToFields",
+			"options": {
+			  "keepLabels": [
+				"vin"
+			  ],
+			  "valueLabel": "vin"
+			}
+		  }
+		],
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"displayName": "Occurance",
+			"mappings": [],
+			"noValue": "0",
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 3,
+		  "x": 12,
+		  "y": 10
+		},
+		"id": 25,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "none",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"tachographSpeed\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> duplicate(column: \"_value\", as: \"original_value\")\n  // 변화량 계산\n  |> difference(columns: [\"_value\"], nonNegative: false)\n  // 새로운 필드 diff에 변화량의 절대값 저장\n  |> map(fn: (r) => ({\n      _time: r._time,\n      _diff: if ((r.original_value - r._diff) == 0) then 0.0 else (r.original_value / (r.original_value - r._value) - 1.0) * 100.0,\n      vin: r.vin\n    }))\n  |> filter(fn: (r) => r[\"_diff\"] < -50 )\n  |> yield(name: \"with_abs_diff\")\n",
+			"refId": "A"
+		  }
+		],
+		"title": "Sudden Brakes",
+		"transformations": [
+		  {
+			"id": "calculateField",
+			"options": {
+			  "mode": "index",
+			  "reduce": {
+				"reducer": "sum"
+			  },
+			  "replaceFields": true
+			}
+		  }
+		],
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 9,
+		  "x": 15,
+		  "y": 10
+		},
+		"id": 24,
+		"options": {
+		  "dedupStrategy": "none",
+		  "enableLogDetails": true,
+		  "prettifyLogMessage": false,
+		  "showCommonLabels": false,
+		  "showLabels": false,
+		  "showTime": true,
+		  "sortOrder": "Ascending",
+		  "wrapLogMessage": false
+		},
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"tachographSpeed\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"vin\"])\n  |> group(columns: [\"vin\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> duplicate(column: \"_value\", as: \"original_value\")\n  // 변화량 계산\n  |> difference(columns: [\"_value\"], nonNegative: false)\n  // 새로운 필드 diff에 변화량의 절대값 저장\n  |> map(fn: (r) => ({\n      _time: r._time,\n      _diff: if ((r.original_value - r._diff) == 0) then 0.0 else (r.original_value / (r.original_value - r._value) - 1.0) * 100.0,\n      vin: r.vin\n    }))\n  |> filter(fn: (r) => r[\"_diff\"] < -50 )\n  |> map(fn: (r) => ({\n    _time: r._time,\n    log: string(v: r._diff),\n    vin: r.vin\n  }))\n  |> yield(name: \"with_abs_diff\")\n",
+			"refId": "A"
+		  }
+		],
+		"title": "Sudden Brakes",
+		"transformations": [],
+		"type": "logs"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "fillOpacity": 70,
+			  "lineWidth": 0,
+			  "spanNulls": false
+			},
+			"mappings": [
+			  {
+				"options": {
+				  "DRIVE": {
+					"color": "red",
+					"index": 1
+				  },
+				  "DRIVER_AVAILABLE": {
+					"color": "orange",
+					"index": 2
+				  },
+				  "REST": {
+					"color": "green",
+					"index": 0
+				  },
+				  "WORK": {
+					"color": "blue",
+					"index": 3
+				  }
+				},
+				"type": "value"
+			  }
+			],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byRegexp",
+				"options": "/driver1WorkingState.*/"
+			  },
+			  "properties": [
+				{
+				  "id": "displayName",
+				  "value": "Driver 1 (${__field.labels.vin})"
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byRegexp",
+				"options": "/driver2WorkingState.*/"
+			  },
+			  "properties": [
+				{
+				  "id": "displayName",
+				  "value": "Driver 2 (${__field.labels.vin})"
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 5,
+		  "w": 12,
+		  "x": 0,
+		  "y": 18
+		},
+		"id": 12,
+		"options": {
+		  "alignValue": "left",
+		  "legend": {
+			"displayMode": "list",
+			"placement": "bottom",
+			"showLegend": true
+		  },
+		  "mergeValues": true,
+		  "rowHeight": 0.9,
+		  "showValue": "never",
+		  "tooltip": {
+			"mode": "single",
+			"sort": "none"
+		  }
+		},
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"driver1WorkingState\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"vin\", \"_value\", \"_time\", \"_field\"])\n  |> group(columns: [\"vin\", \"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Driver Working State",
+		"transformations": [],
+		"type": "state-timeline"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [],
+			"noValue": "N/A",
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "#000000",
+				  "value": null
+				},
+				{
+				  "color": "#303030",
+				  "value": -15
+				},
+				{
+				  "color": "#302e9b",
+				  "value": -10
+				},
+				{
+				  "color": "#000082",
+				  "value": -5
+				},
+				{
+				  "color": "#0001fc",
+				  "value": 0
+				},
+				{
+				  "color": "#2e65fd",
+				  "value": 5
+				},
+				{
+				  "color": "#99cdfc",
+				  "value": 10
+				},
+				{
+				  "color": "#2dd1ca",
+				  "value": 15
+				},
+				{
+				  "color": "#008001",
+				  "value": 20
+				},
+				{
+				  "color": "#9ad000",
+				  "value": 25
+				},
+				{
+				  "color": "#fed000",
+				  "value": 30
+				},
+				{
+				  "color": "#fe6700",
+				  "value": 35
+				},
+				{
+				  "color": "#c6140c",
+				  "value": 40
+				}
+			  ]
+			},
+			"unit": "celsius"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 3,
+		  "x": 15,
+		  "y": 18
+		},
+		"id": 6,
+		"options": {
+		  "colorMode": "background_solid",
+		  "graphMode": "none",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ambientAirTemperature\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Ambient Air Temperature",
+		"transformations": [
+		  {
+			"id": "labelsToFields",
+			"options": {
+			  "keepLabels": [
+				"vin"
+			  ],
+			  "valueLabel": "vin"
+			}
+		  }
+		],
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "fixedColor": "#ce6b43",
+			  "mode": "fixed"
+			},
+			"mappings": [],
+			"noValue": "N/A",
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "light-blue",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "suffix:kg"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 6,
+		  "x": 18,
+		  "y": 18
+		},
+		"id": 10,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "none",
+		  "justifyMode": "auto",
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"header\")\n  |> filter(fn: (r) => r[\"_field\"] == \"grossCombinationVehicleWeight\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Gross combination Vehicle Weight",
+		"transformations": [
+		  {
+			"id": "labelsToFields",
+			"options": {
+			  "keepLabels": [
+				"vin"
+			  ],
+			  "valueLabel": "vin"
+			}
+		  }
+		],
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [],
+			"noValue": "N/A",
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "red",
+				  "value": null
+				},
+				{
+				  "color": "yellow",
+				  "value": 50
+				},
+				{
+				  "color": "green",
+				  "value": 100
+				}
+			  ]
+			},
+			"unit": "suffix:m"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 6,
+		  "x": 0,
+		  "y": 23
+		},
+		"id": 14,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"estimatedDistanceToEmptyFuel\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Est. Distance to empty (Fuel)",
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "fixedColor": "#ce6b43",
+			  "mode": "fixed"
+			},
+			"mappings": [],
+			"noValue": "N/A",
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "suffix:m"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 6,
+		  "x": 6,
+		  "y": 23
+		},
+		"id": 13,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "none",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "value"
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"header\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hrTotalVehicleDistance\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Total Distance Traveled",
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "fixedColor": "semi-dark-red",
+			  "mode": "fixed"
+			},
+			"mappings": [
+			  {
+				"options": {
+				  "false": {
+					"color": "green",
+					"index": 0,
+					"text": "released"
+				  },
+				  "true": {
+					"color": "red",
+					"index": 1,
+					"text": "engaged"
+				  }
+				},
+				"type": "value"
+			  }
+			],
+			"noValue": "N/A",
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "bool_on_off"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 3,
+		  "x": 15,
+		  "y": 26
+		},
+		"id": 7,
+		"options": {
+		  "colorMode": "background_solid",
+		  "graphMode": "none",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "/^Value$/",
+			"values": false
+		  },
+		  "textMode": "value"
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"hide": false,
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"parkingBrakeSwitch\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Parking Brake",
+		"transformations": [
+		  {
+			"id": "labelsToFields",
+			"options": {
+			  "keepLabels": [
+				"vin"
+			  ],
+			  "mode": "columns",
+			  "valueLabel": "vin"
+			}
+		  }
+		],
+		"type": "stat"
+	  },
+	  {
+		"collapsed": true,
+		"gridPos": {
+		  "h": 1,
+		  "w": 24,
+		  "x": 0,
+		  "y": 34
+		},
+		"id": 23,
+		"panels": [],
+		"title": "Maintainance",
+		"type": "row"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "continuous-RdYlGr"
+			},
+			"mappings": [],
+			"max": 100,
+			"min": 0,
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "red",
+				  "value": null
+				},
+				{
+				  "color": "green",
+				  "value": 30
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "catalystFuelLevel"
+			  },
+			  "properties": [
+				{
+				  "id": "displayName",
+				  "value": "Left Brake Pad"
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "fuelLevel1"
+			  },
+			  "properties": [
+				{
+				  "id": "displayName",
+				  "value": "Right Brake Pad"
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 5,
+		  "w": 12,
+		  "x": 0,
+		  "y": 35
+		},
+		"id": 18,
+		"options": {
+		  "displayMode": "basic",
+		  "minVizHeight": 10,
+		  "minVizWidth": 0,
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showUnfilled": true,
+		  "valueMode": "color"
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"fuelLevel1\" or r[\"_field\"] == \"catalystFuelLevel\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"vin\"])\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "BrakePad Health",
+		"type": "bargauge"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"decimals": 0,
+			"mappings": [],
+			"max": 100,
+			"min": 0,
+			"noValue": "N/A",
+			"thresholds": {
+			  "mode": "percentage",
+			  "steps": [
+				{
+				  "color": "red",
+				  "value": null
+				},
+				{
+				  "color": "yellow",
+				  "value": 5
+				},
+				{
+				  "color": "green",
+				  "value": 30
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "fuelLevel1"
+			  },
+			  "properties": [
+				{
+				  "id": "displayName",
+				  "value": "First Tank (${__field.labels.vin})"
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "fuelLevel2"
+			  },
+			  "properties": [
+				{
+				  "id": "displayName",
+				  "value": "Second Tank (${__field.labels.vin})"
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "catalystFuelLevel"
+			  },
+			  "properties": [
+				{
+				  "id": "displayName",
+				  "value": "AdBlue (${__field.labels.vin})"
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 12,
+		  "x": 12,
+		  "y": 35
+		},
+		"id": 4,
+		"options": {
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showThresholdLabels": false,
+		  "showThresholdMarkers": true,
+		  "text": {}
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"fuelLevel1\" or r._field == \"fuelLevel2\" or r[\"_field\"] == \"catalystFuelLevel\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"vin\"])\n  |> group(columns: [\"vin\", \"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "Fuel Levels",
+		"transformations": [],
+		"transparent": true,
+		"type": "gauge"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "continuous-RdYlGr"
+			},
+			"mappings": [],
+			"max": 300,
+			"min": 0,
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "lengthkm"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 3,
+		  "w": 12,
+		  "x": 0,
+		  "y": 40
+		},
+		"id": 19,
+		"options": {
+		  "displayMode": "gradient",
+		  "minVizHeight": 10,
+		  "minVizWidth": 0,
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showUnfilled": true,
+		  "valueMode": "color"
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"catalystFuelLevel\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"vin\"])\n  |> group(columns: [\"vin\", \"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "HealthCheck Needed In",
+		"type": "bargauge"
+	  },
+	  {
+		"collapsed": false,
+		"gridPos": {
+		  "h": 1,
+		  "w": 24,
+		  "x": 0,
+		  "y": 43
+		},
+		"id": 22,
+		"panels": [],
+		"title": "ECO",
+		"type": "row"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb",
+		  "uid": "PDC312342D5DCA611"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [],
+			"max": 100,
+			"min": 0,
+			"thresholds": {
+			  "mode": "percentage",
+			  "steps": [
+				{
+				  "color": "dark-green",
+				  "value": null
+				},
+				{
+				  "color": "dark-yellow",
+				  "value": 15
+				},
+				{
+				  "color": "dark-orange",
+				  "value": 60
+				},
+				{
+				  "color": "dark-red",
+				  "value": 85
+				}
+			  ]
+			},
+			"unit": "masskg"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 6,
+		  "x": 0,
+		  "y": 44
+		},
+		"id": 20,
+		"options": {
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "mean"
+			],
+			"fields": "",
+			"limit": 2,
+			"values": false
+		  },
+		  "showThresholdLabels": false,
+		  "showThresholdMarkers": true
+		},
+		"pluginVersion": "9.5.14",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb",
+			  "uid": "PDC312342D5DCA611"
+			},
+			"query": "from(bucket: \"demo\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snapshot\")\n  |> filter(fn: (r) => r[\"_field\"] == \"fuelLevel1\")\n  |> filter(fn: (r) => contains(set: ${selected_vin:json}, value: r[\"vin\"]))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"vin\"])\n  |> group(columns: [\"vin\", \"_field\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+			"refId": "A"
+		  }
+		],
+		"title": "CO2 Emission",
+		"type": "gauge"
+	  }
+	],
+	"refresh": "5s",
+	"revision": 1,
+	"schemaVersion": 38,
+	"style": "dark",
+	"tags": [],
+	"templating": {
+	  "list": [
+		{
+		  "current": {
+			"selected": true,
+			"text": [
+			  "YV2E4C3A5VB180691"
+			],
+			"value": [
+			  "YV2E4C3A5VB180691"
+			]
+		  },
+		  "datasource": {
+			"type": "influxdb",
+			"uid": "PDC312342D5DCA611"
+		  },
+		  "definition": "import \"influxdata/influxdb/schema\"\n\nschema.tagValues(bucket: \"demo\", tag: \"vin\")\n",
+		  "description": "The VIN of selected vehicle",
+		  "hide": 0,
+		  "includeAll": false,
+		  "label": "VIN",
+		  "multi": true,
+		  "name": "selected_vin",
+		  "options": [],
+		  "query": "import \"influxdata/influxdb/schema\"\n\nschema.tagValues(bucket: \"demo\", tag: \"vin\")\n",
+		  "refresh": 2,
+		  "regex": "",
+		  "skipUrlSync": false,
+		  "sort": 0,
+		  "type": "query"
+		}
+	  ]
+	},
+	"time": {
+	  "from": "now-30m",
+	  "to": "now"
+	},
+	"timepicker": {},
+	"timezone": "",
+	"title": "jinholee",
+	"uid": "OwEBnb1Vd1",
+	"version": 2,
+	"weekStart": ""
+  }
