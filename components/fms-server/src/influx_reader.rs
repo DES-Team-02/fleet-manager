@@ -87,6 +87,30 @@ impl InfluxReader {
         })
     }
 
+    pub async fn get_vehicleinsurancereport(&self) 
+    -> Result<Vec<models::VehicleObject>, InfluxError> {
+        // Lets build the query here
+        let read_query = influxrs::Query::new(format!(
+            r#"
+                import "influxdata/influxdb/schema"
+                schema.tagValues(bucket: "{}", tag: "{}")
+            "#,
+            self.influx_con.bucket,
+            influx_client::TAG_VIN,
+        ));
+        
+        // Return result of query
+        self.influx_con.client.query(read_query).await.map(|vins| {
+            vins.into_iter()
+                .filter_map(|entry| {
+                    entry
+                        .get("_value")
+                        .map(|vin| models::VehicleObject::new(vin.to_string()))
+                })
+                .collect()
+        })
+    }
+
     pub async fn get_vehicleposition(
         &self,
         start_time: i64,

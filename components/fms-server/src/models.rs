@@ -57,6 +57,58 @@ pub struct VehiclePositionObject {
 
 }
 
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
+pub struct VehicleInsuranceReportObject {
+    // current,Vehicle.Tachograph.Driver.Driver1.WorkingState,DRIVE,0.0001
+    #[serde(rename = "workingState")]
+    pub working_state: String,
+
+    // current,Vehicle.Tachograph.Driver.Driver1.TimeRelatedStatus,NORMAL,0.01
+    #[serde(rename = "timeRelatedStatus")]
+    pub time_related_status: chrono::DateTime::<chrono::Utc>,
+
+    // current,Vehicle.Chassis.Accelerator.PedalPosition,30,0.01
+    #[serde(rename = "acceleratorPedalPosition")]
+    pub accelerator_pedal_position : f64,
+
+    // current,Vehicle.Chassis.Brake.Circuit1.PedalPosition,25,0.01
+    #[serde(rename = "brakePedalPosition")]
+    pub brake_padwear_right: Option<GnssPositionObject>,
+
+    // current,Vehicle.Speed,0.498,0.26965856552124
+    #[serde(rename = "speed")]
+    pub speed: Option<f64>,
+
+    // current,Vehicle.TripDuration,0.285,0.298
+    #[serde(rename = "tripDuration")]
+    pub trip_duration: Option<f64>,
+
+    // current,Vehicle.AverageSpeed,0.225,0.298
+    #[serde(rename = "averageSpeed")]
+    pub average_speed: Option<f64>,
+
+    // current,Vehicle.Service.DistanceToService,65.28,0.1
+    #[serde(rename = "distanceToService")]
+    pub distance_to_service: Option<f64>,
+
+    // current,Vehicle.TraveledDistanceSinceStart,230.8,0.1
+    #[serde(rename = "traveledDistanceSinceStart")]
+    pub traveled_distance_since_start: Option<f64>,
+
+    // current,Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear,20,0.298
+    #[serde(rename = "brakePadWearLeft")]
+    pub brake_padwear_left: Option<f64>,
+
+    // current,Vehicle.EmissionsCO2,0.22,0.298
+    #[serde(rename = "emissionsCO2")]
+    pub emissions_co2: Option<f64>,
+
+    // current,Vehicle.Powertrain.FuelSystem.AbsoluteLevel,50.01,0.298
+    #[serde(rename = "fuelLevelAbsolute")]
+    pub fuel_level_absolute: Option<f64>,
+}
+
 /// This description is placed here due to limitations of describing references in OpenAPI  Property __driverId__:  The driver id of driver. (independant whether it is driver or Co-driver)  This is only set if the TriggerType = DRIVER_LOGIN, DRIVER_LOGOUT, DRIVER_1_WORKING_STATE_CHANGED or DRIVER_2_WORKING_STATE_CHANGED  For DRIVER_LOGIN it is the id of the driver that logged in  For DRIVER_LOGOUT it is the id of the driver that logged out  For DRIVER_1_WORKING_STATE_CHANGED it is the id of driver 1  For DRIVER_2_WORKING_STATE_CHANGED it is the id of driver 2  Property __tellTaleInfo__:  The tell tale(s) that triggered this message.  This is only set if the TriggerType = TELL_TALE
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
@@ -276,13 +328,40 @@ pub struct VehiclePositionResponseObject {
 
 }
 
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
+pub struct VehicleInsurcanceReportResponseObject {
+    #[serde(rename = "vehicleInsurcanceReportResponse")]
+    pub vehicle_insurance_report_response: models::VehicleInsuranceReportResponseObjectVehicleInsuranceReportResponse,
+
+    /// This will be set to true if the result set was too large to be sent back in one reply. A new request must be sent to get the rest of the vehicle positions, where the starttime parameter must be supplied. The starttime should be set to the latest ReceivedDateTime + 1 second of the last vehicle in the result set of this message.
+    #[serde(rename = "moreDataAvailable")]
+    pub more_data_available: bool,
+
+    /// Populated with the link to the next part of the result when moreDataAvailable is true. The link is relative, i.e. starts with /rfms/vehiclepositions, and preserves any query parameters from the original request.
+    #[serde(rename = "moreDataAvailableLink")]
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub more_data_available_link: Option<String>,
+
+    /// Time to be used to ask for historical data at customers (for starttime), to solve the problem of having different times at server and clients. This is the time at the server when this request was received. To avoid losing any messages or get duplicates, this is the time that should be supplied in the startTime parameter in the next request in iso8601 format.
+    #[serde(rename = "requestServerDateTime")]
+    pub request_server_date_time: chrono::DateTime::<chrono::Utc>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
+pub struct VehicleInsuranceReportResponseObjectVehicleInsuranceReportResponse {
+    #[serde(rename = "vehicleInsuranceReport")]
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub vehicle_insurance_report: Option<Vec<models::VehicleInsuranceReportObject>>,
+}
+
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
 pub struct VehiclePositionResponseObjectVehiclePositionResponse {
     #[serde(rename = "vehiclePositions")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub vehicle_positions: Option<Vec<models::VehiclePositionObject>>,
-
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -515,4 +594,17 @@ pub struct ErrorObject {
 
 }
 
-
+// field,signal,value,delay
+// current,Vehicle.VehicleIdentification.VIN,YV2E4C3A5VB18070,0.1
+// current,Vehicle.Tachograph.Driver.Driver1.WorkingState,DRIVE,0.0001
+// current,Vehicle.Tachograph.Driver.Driver1.TimeRelatedStatus,NORMAL,0.01
+// current,Vehicle.Chassis.Accelerator.PedalPosition,30,0.01
+// current,Vehicle.Chassis.Brake.Circuit1.PedalPosition,25,0.01
+// current,Vehicle.Speed,0.498,0.26965856552124
+// current,Vehicle.TripDuration,0.285,0.298
+// current,Vehicle.AverageSpeed,0.225,0.298
+// current,Vehicle.Service.DistanceToService,65.28,0.1
+// current,Vehicle.TraveledDistanceSinceStart,230.8,0.1
+// current,Vehicle.Chassis.Axle.Row1.Wheel.Left.Brake.PadWear,20,0.298
+// current,Vehicle.EmissionsCO2,0.22,0.298
+// current,Vehicle.Powertrain.FuelSystem.AbsoluteLevel,50.01,0.298
